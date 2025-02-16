@@ -10,8 +10,9 @@
 <body>
     <header>
         <h1>Simulación de beneficios tributarios en la oferta voluntaria 
-            a la Agencia Nacional de Tierras</h1>
-            <p>Este escenario aplica cuando el vendedor es persona natural</p>
+            a la ANT</h1>
+            <p>Este escenario aplica cuando el vendedor es persona natural. 
+                Si el vendedor es persona jurídica hay algunos cambios</p>
             <p>Los valores que a continuación se calculan corresponden a una venta
                  ordinaria y mas abajo se indican los valores que no pagaría Si la 
                  venta se hace por oferta voluntaria a la ANT</p>
@@ -32,13 +33,13 @@
             <br>
             <button type="submit">Calcular</button>
         </form>
-        <p id="result"></p>
-        <p id="multiplication-result"></p>
-        <p>El costo fiscal procedente mas eficiente en este caso es:</p>
-        <p class="relevante" id="max-value"></p>
 
         <section id="ganancia-ocasional">
             <h2>Liquidación de la ganancia ocasional</h2>
+            <p id="result"></p>
+            <p id="multiplication-result"></p>
+            <p>El costo fiscal procedente mas eficiente en este caso es:</p>
+            <p class="relevante" id="max-value"></p>
             <p id="ganancia-result"></p>
             <p class="relevante" id="impuesto-ganancia-ocasional"></p>
             <h2>Liquidación de gastos de escrituración</h2>
@@ -56,7 +57,8 @@
 
         <section id="beneficios">
             <h2>Beneficios tributarios en la oferta voluntaria a la ANT</h2>
-            <p>No paga la retención en la fuente del 1% al notario</p>
+            <p>No paga la retención en la fuente del 1% al notario, y</p>
+            <p>No paga el impuesto de timbre</p>
             <p class="relevante" id="gastos_Netos"></p>
             <p class="relevante" >Tampoco paga el impuesto sobre ganancias 
                 ocasionales del 15% porque la venta no constituye ingreso gravado
@@ -67,8 +69,8 @@
     </main>
     <footer>
         <p>En el escenario en que el vendedor es persona jurídica no aplica la 
-            reteFuente del 1% que se le paga al notario. Pero si el comprador es agente
-        retenedor practicará el 2.5%</p>
+            reteFuente del 1% que se le paga al notario. Pero si además el comprador
+             es agente retenedor practicará el 2.5%</p>
     </footer>
 </body>
 </html>

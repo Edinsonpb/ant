@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const value1DivUVT = (value1 / uvt_vigente).toFixed(2);
             const rangoResult = getRangoValue(impuestoTimbre, value1DivUVT);
             if (rangoResult !== null) {
-                let valor_impuesto_timbre;
                 if (rangoResult.position === 0) {
                     valor_impuesto_timbre = value1DivUVT * rangoResult.value;
                 } else if (rangoResult.position === 1) {
@@ -96,16 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('rango-value').textContent = 'Error al cargar el impuesto de timbre';
         }
         const reteFuente = value1 * 1 / 100;
-        document.getElementById('reteFuente').textContent = `La retención en la fuente que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(reteFuente)}`;
+        document.getElementById('reteFuente').textContent = `La retención en la fuente del 1% que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(reteFuente)}`;
         const impoRegistro = Math.round(value1 * 1.104 / 100 / 2);
-        document.getElementById('impo_Registro').textContent = `El impuesto de registro que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(impoRegistro)}`;
+        document.getElementById('impo_Registro').textContent = `El 50% impuesto de registro que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(impoRegistro)}`;
         const impoGobernacion = Math.round(value1 * 1 / 100 / 2);
-        document.getElementById('impo_Gobernacion').textContent = `El impuesto de la gobernación que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(impoGobernacion)}`;
+        document.getElementById('impo_Gobernacion').textContent = `El 50% impuesto de la gobernación que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(impoGobernacion)}`;
         const gastos_Notariales = Math.round(value1 * 0.54 / 100);
         document.getElementById('gastos_Notariales').textContent = `Los gastos notariales que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(gastos_Notariales)}`;
         const total_Gastos = valor_impuesto_timbre + reteFuente + impoRegistro + impoGobernacion + gastos_Notariales;
         document.getElementById('total_Gastos').textContent = `El total de gastos de escrituración que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(total_Gastos)}`;
-        const gastos_Netos = total_Gastos - reteFuente;
+        const gastos_Netos = total_Gastos - reteFuente - valor_impuesto_timbre;
         document.getElementById('gastos_Netos').textContent = `El total de gastos de escrituración que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(gastos_Netos)}`;
     });
 });

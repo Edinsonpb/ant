@@ -6,6 +6,19 @@ h1,h2 {
     font-weight: bold;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-style: solid;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#result, #multiplication-result {
+    display: none;
+}
+
 #total {
     border-style: dashed;
 }
