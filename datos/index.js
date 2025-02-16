@@ -35,7 +35,7 @@ function getRangoValue(rangos, value) {
     for (const rango in rangos) {
         const [min, max] = rango.split('-').map(Number);
         if (value >= min && value <= max) {
-            return { value: rangos[rango], position: position };
+            return { value: parseFloat(rangos[rango]), position: position };
         }
         position++;
     }
@@ -74,16 +74,38 @@ document.addEventListener('DOMContentLoaded', () => {
     calculateImpuestosButton.addEventListener('click', async () => {
         const value1 = parseFloat(document.getElementById('value1').value.replace(/\./g, '').replace(',', '.'));
         const impuestoTimbre = await fetchImpuestoTimbre();
+        let valor_impuesto_timbre = 0;
         if (impuestoTimbre !== null) {
             const value1DivUVT = (value1 / uvt_vigente).toFixed(2);
             const rangoResult = getRangoValue(impuestoTimbre, value1DivUVT);
             if (rangoResult !== null) {
-                document.getElementById('rango-value').textContent = `El valor correspondiente al rango de ${value1DivUVT} es ${rangoResult.value} en la posición ${rangoResult.position}`;
+                let valor_impuesto_timbre;
+                if (rangoResult.position === 0) {
+                    valor_impuesto_timbre = value1DivUVT * rangoResult.value;
+                } else if (rangoResult.position === 1) {
+                    valor_impuesto_timbre = ((value1DivUVT - 20000) * rangoResult.value / 100) / 2 * uvt_vigente;
+                } else if (rangoResult.position === 2) {
+                    valor_impuesto_timbre = (((value1DivUVT - 50000) * rangoResult.value / 100) + (30000 * 0.015)) / 2 * uvt_vigente;
+                }
+                valor_impuesto_timbre = Math.round(valor_impuesto_timbre);
+                document.getElementById('rango-value').textContent = `El valor del impuesto de timbre a cargo del vendedor es ${new Intl.NumberFormat('es-CO').format(valor_impuesto_timbre)}`;
             } else {
                 document.getElementById('rango-value').textContent = 'No se encontró un rango correspondiente';
             }
         } else {
             document.getElementById('rango-value').textContent = 'Error al cargar el impuesto de timbre';
         }
+        const reteFuente = value1 * 1 / 100;
+        document.getElementById('reteFuente').textContent = `La retención en la fuente que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(reteFuente)}`;
+        const impoRegistro = Math.round(value1 * 1.104 / 100 / 2);
+        document.getElementById('impo_Registro').textContent = `El impuesto de registro que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(impoRegistro)}`;
+        const impoGobernacion = Math.round(value1 * 1 / 100 / 2);
+        document.getElementById('impo_Gobernacion').textContent = `El impuesto de la gobernación que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(impoGobernacion)}`;
+        const gastos_Notariales = Math.round(value1 * 0.54 / 100);
+        document.getElementById('gastos_Notariales').textContent = `Los gastos notariales que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(gastos_Notariales)}`;
+        const total_Gastos = valor_impuesto_timbre + reteFuente + impoRegistro + impoGobernacion + gastos_Notariales;
+        document.getElementById('total_Gastos').textContent = `El total de gastos de escrituración que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(total_Gastos)}`;
+        const gastos_Netos = total_Gastos - reteFuente;
+        document.getElementById('gastos_Netos').textContent = `El total de gastos de escrituración que paga el vendedor es ${new Intl.NumberFormat('es-CO').format(gastos_Netos)}`;
     });
 });
